@@ -1,0 +1,17 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+name: blue-new
+endpoint_name: cli-diabetes-mma-managed-001
+model:
+  name: diabetes-sklearn-manual-cli
+  version: 3
+  path: ./model_man_deploy/model.pkl
+  job_name: ivory_answer_2rs07dd6
+code_configuration:
+  code: ./model_man_deploy/
+  scoring_script: score.py
+environment:
+  conda_file: ./model_man_deploy/conda.yaml
+  image: mcr.microsoft.com/azureml/openmpi3.1.2-ubuntu18.04:20210727.v1
+instance_type: Standard_F2s_v2
+instance_count: 1
+app_insights_enabled: true

@@ -1,6 +1,6 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: mlflow-deployment
-endpoint_name: mlflow-endpoint
+endpoint_name: mlflow-endpoint-diabetes-mma1
 model:
   name: sample-mlflow-sklearn-model
   version: 1

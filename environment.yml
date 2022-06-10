@@ -1,0 +1,9 @@
+name: azureml-cli-v2
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python==3.9.5
+  - pillow==8.3.1
+  - yapf==0.31.0
+  - pylint==2.12.1

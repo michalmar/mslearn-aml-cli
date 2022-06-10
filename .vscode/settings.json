@@ -1,8 +1,8 @@
 {
-    "markdownlint.config": {
-        "MD028": false,
-        "MD025": {
-            "front_matter_title": ""
-        }
-    }
+    "python.linting.pylintEnabled": true,
+    "python.formatting.provider": "yapf",
+    "editor.rulers": [
+        80
+    ],
+    "editor.formatOnSave": true,
 }

@@ -1,14 +1,15 @@
 $schema: https://azuremlschemas.azureedge.net/latest/batchDeployment.schema.json
-name: mlflowdp
+name: nonmlflow
 endpoint_name: mlflow-endpoint-diabetes-mma3
 model:
   name: sample-mlflow-sklearn-model
   version: 1
   path: model
   type: mlflow_model
+code_configuration:
+  code: ./model_man_deploy_batch/
+  scoring_script: score_batch.py
 environment:
   conda_file: ./model_man_deploy_batch/conda.yaml
-  image: mcr.microsoft.com/azureml/openmpi3.1.2-ubuntu18.04:latest
-mini_batch_size: 1
+  image: mcr.microsoft.com/azureml/openmpi3.1.2-ubuntu18.04:20210727.v1
 compute: azureml:aml-cluster
-logging_level: info

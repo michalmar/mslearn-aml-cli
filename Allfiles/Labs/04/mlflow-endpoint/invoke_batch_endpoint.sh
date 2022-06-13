@@ -1,6 +1,6 @@
 ENDPOINT_NAME=mlflow-endpoint-diabetes-mma3
-DATASET_NAME=diabetes-data-tabular
-DATASET_VERSION=1
+DATASET_NAME=diabetes_data_file
+DATASET_VERSION=latest
 
 SUBSCRIPTION_ID=$(az account show --query id | tr -d '\r"')
 echo "SUBSCRIPTION_ID: $SUBSCRIPTION_ID"
@@ -53,6 +53,9 @@ curl --location --request POST $SCORING_URI \
 # JOB_ID=$(echo $response | jq -r '.id')
 # JOB_ID_SUFFIX=$(echo ${JOB_ID##/*/})
 
+az ml data create --name diabetes_data_v2 --version 4 --path ./Allfiles/Labs/04/mlflow-endpoint/data/diabetes_classification.csv
+az ml data create --name diabetes_data_file --path ./Allfiles/Labs/04/mlflow-endpoint/data/diabetes_classification_8cols.csv --type uri_file 
+az ml data create --name diabetes_data_mltable  --path ./Allfiles/Labs/04/mlflow-endpoint/data/ --type mltable
 
-az ml batch-endpoint invoke --name $ENDPOINT_NAME --input azureml:$DATASET_NAME:$DATASET_VERSION
+az ml batch-endpoint invoke --name $ENDPOINT_NAME --input azureml:$DATASET_NAME:2
 

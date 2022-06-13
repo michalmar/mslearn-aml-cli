@@ -2,6 +2,7 @@ import joblib
 import numpy as np
 import os
 import json
+import pandas as pd
 
 # from inference_schema.schema_decorators import input_schema, output_schema
 # from inference_schema.parameter_types.numpy_parameter_type import NumpyParameterType
@@ -158,7 +159,13 @@ def run(mini_batch):
         # prepare each image
         # TODO
         print(f"processing file {f}")
-        # resultList.append("{}: {}".format(os.path.basename(image), best_result))
+        df = pd.read_csv(f)
+        X, y = df[[
+            'Pregnancies', 'PlasmaGlucose', 'DiastolicBloodPressure',
+            'TricepsThickness', 'SerumInsulin', 'BMI', 'DiabetesPedigree', 'Age'
+        ]].values, df['Diabetic'].values
+
+        result = model.predict(X)
 
     return resultList
 

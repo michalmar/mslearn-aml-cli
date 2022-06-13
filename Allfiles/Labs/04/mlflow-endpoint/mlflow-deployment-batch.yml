@@ -6,4 +6,5 @@ model:
   version: 1
   path: model
   type: mlflow_model
+mini_batch_size: 1
 compute: azureml:aml-cluster

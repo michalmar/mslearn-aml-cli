@@ -4,6 +4,14 @@ import os
 import json
 import pandas as pd
 
+import logging
+from opencensus.ext.azure.log_exporter import AzureLogHandler
+
+from azureml.core.run import Run
+
+logger = logging.getLogger("MMA-TEST-LOG")
+logger.setLevel("INFO")
+
 # from inference_schema.schema_decorators import input_schema, output_schema
 # from inference_schema.parameter_types.numpy_parameter_type import NumpyParameterType
 
@@ -15,6 +23,15 @@ import pandas as pd
 
 def init():
     global model
+
+    run = Run.get_context(allow_offline=False)
+
+    logger.addHandler(
+        AzureLogHandler(
+            connection_string=
+            f'InstrumentationKey={run.get_secret(name="default-app-insights-ik")}'
+        ))
+
     # The AZUREML_MODEL_DIR environment variable indicates
     # a directory containing the model file you registered.
     model_filename = 'model.pkl'
@@ -24,6 +41,13 @@ def init():
 
     print("\n\n" + "*" * 60)
     print(f'Model:   {model}')
+    properties = {
+        'custom_dimensions': {
+            'model': str(model),
+            'path': model_path
+        }
+    }
+    logger.info("Model loaded", extra=properties)
 
 
 # The run() method is called each time a request is made to the scoring API.
@@ -40,5 +64,13 @@ def run(mini_batch):
         ]].values
 
         result = model.predict(X)
+
+        properties = {
+            'custom_dimensions': {
+                'scored_rows': str(len(result)),
+                'file': f
+            }
+        }
+        logger.info("File scored.", extra=properties)
 
     return result.tolist()

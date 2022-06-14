@@ -12,4 +12,5 @@ dependencies:
       - pandas
       - azureml-core
       - azureml-dataset-runtime[fuse]
+      - opencensus-ext-azure
 name: mlflow-env

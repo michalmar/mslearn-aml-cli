@@ -59,3 +59,4 @@ az ml data create --name diabetes_data_mltable  --path ./Allfiles/Labs/04/mlflow
 
 az ml batch-endpoint invoke --name $ENDPOINT_NAME --input azureml:$DATASET_NAME:2
 
+az ml batch-endpoint invoke --name mlflow-endpoint-diabetes-mma3 --input azureml:diabetes_data_file:2
